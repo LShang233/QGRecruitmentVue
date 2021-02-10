@@ -1,0 +1,115 @@
+.log-body {
+  background-image: url(./../../assets/bg.png);
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  #log-div {
+    position: absolute;
+    right: 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    width: 500px;
+    height: 70%;
+    min-height: 600px;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: box-shadow 0.3s;
+    box-shadow: 0 0.7px 20px rgba(92, 92, 92, 0.5);
+
+    &:hover {
+      box-shadow: 0 0.7px 20px rgba(92, 92, 92, 0.9);
+    }
+
+    img {
+      margin-top: 8%;
+      width: 28%;
+    }
+
+    p {
+      margin: 32px 0;
+      font-size: 20px;
+      font-weight: 500;
+      color: white;
+    }
+
+    .log-input {
+      border: solid rgba(150, 104, 231, 0.7) 3px;
+      border-radius: 4px;
+      background-color: white;
+      height: 35px;
+      width: 360px;
+      margin: 16px 0;
+
+      svg {
+        fill: rgba(0, 0, 0, 0.3);
+        height: 100%;
+      }
+
+      input {
+        float: left;
+        background-color: transparent;
+        height: 90%;
+        width: 80%;
+        font-style: 16px;
+      }
+
+      .log-svg {
+        float: left;
+        text-align: center;
+        height: 100%;
+        width: 60px;
+
+        svg {
+          height: 80%;
+          margin-top: 5%;
+        }
+      }
+    }
+
+    #log-rem {
+      align-self: flex-end;
+      height: 16px;
+      line-height: 16px;
+      vertical-align: middle;
+      position: relative;
+      right: 70px;
+
+      span {
+        margin-left: 6px;
+        font-size: 14px;
+        vertical-align: middle;
+        color: white;
+      }
+
+      input {
+        vertical-align: middle;
+        cursor: pointer;
+      }
+    }
+
+    #log-in {
+      height: 48px;
+      width: 240px;
+      margin: 32px;
+      border-radius: 5px;
+      background-color: rgba(150, 104, 231, 0.6);
+      transition: background-color 0.3s;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      border: 3px solid rgba(98, 56, 170, 0.6);
+
+      &:hover {
+        background-color: rgb(98, 56, 170);
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+.noti-div {
+  position: relative;
+  margin: 15px;
+  width: 250px;
+  height: 260px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 0.7px 10px rgba(129, 129, 129, 0.5);
+
+  .noti-de {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    background-color: rgba(164, 123, 212, 0.8);
+
+    svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 30px;
+      margin-top: 30px;
+    }
+  }
+
+  .noti-main {
+    outline: none;
+    width: auto;
+    height: 80%;
+    padding: 24px 12px 0 12px;
+    background-color: rgb(247, 244, 248);
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    textarea {
+      width: 226px;
+      height: 180px;
+      background-color: transparent;
+      resize: none;
+      color: black;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  .noti-name {
+    height: 20%;
+    width: 70%;
+    padding-top: 12px;
+    margin-left: 15%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    text-align: center;
+    color: black;
+    background-color: white;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+      /* Chrome Safari */
+    }
+  }
+
+  .noti-change {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 0 0.7px 10px rgba(126, 98, 121, 0.7);
+
+    &:hover {
+      box-shadow: 0 0.7px 10px rgba(126, 98, 121, 0.9);
+    }
+
+    svg {
+      width: 20px;
+      vertical-align: middle;
+      cursor: pointer;
+      fill: rgba(164, 123, 212, 0.9);
+
+      path {
+        cursor: auto;
+      }
+    }
+  }
+}

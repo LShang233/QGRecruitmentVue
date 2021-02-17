@@ -30,6 +30,7 @@
     padding: 0 32px;
     font-size: 14px;
     text-align: left;
+    height: auto;
     > div {
       margin: 4px;
       min-height: 30px;
@@ -123,7 +124,7 @@
             </g>
           </svg>
         </div>
-        <div class="noti-sec-main" v-if="secIndex == 1">
+        <div class="noti-sec-main" v-if="secIndex == 1" style="height: 240px">
           <div>
             <label>姓名：</label>
             <span>{{ nowList.name }}</span>
@@ -163,6 +164,7 @@
               rows="3"
               class="border"
               v-model="nowList.evaluation"
+              style="resize: none"
             ></textarea>
           </div>
         </div>
@@ -207,7 +209,7 @@
           v-if="secIndex == 4"
           style="text-align: center"
         >
-          <div>
+          <div style="height: 250px">
             <textarea
               class="border"
               cols="40"
@@ -217,7 +219,7 @@
               >{{ appearNotice.content }}</textarea
             >
           </div>
-          <div>
+          <div style="margin-bottom: 12px">
             <Select
               v-model="appearNotice.index"
               style="width: 195px; height: 30px; margin-bottom: 12px"

@@ -216,6 +216,7 @@
               placeholder="请输入汉字姓名"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='请输入汉字姓名'"
+              @blur="checkMaxLength(student.name, 15)"
             />
           </div>
           <div>
@@ -228,6 +229,7 @@
               placeholder="15-25"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='15-25'"
+              @blur="checkRange(student.age, 15, 25)"
             />
           </div>
           <div>
@@ -240,6 +242,7 @@
               placeholder="0-100"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='0-100'"
+              @blur="checkRange(student.cexperiment, 1, 100)"
             />
           </div>
           <div>
@@ -262,6 +265,7 @@
               placeholder="如：西三110"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='如：西三110'"
+              @blur="checkMaxLength(student.dormitory, 9)"
             />
           </div>
           <div>
@@ -274,6 +278,7 @@
               placeholder="0-100"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='0-100'"
+              @blur="checkRange(student.cexperiment, 1, 100)"
             />
           </div>
           <div>
@@ -308,6 +313,7 @@
               placeholder="0-5.0"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='0-5.0'"
+              @blur="checkRange(student.gradePoint, 0, 5.0)"
             />
           </div>
           <div>
@@ -340,6 +346,7 @@
               placeholder="请输入电子邮箱"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='请输入电子邮箱'"
+              @blur="checkEmail(student.email)"
             />
           </div>
           <div>
@@ -350,6 +357,7 @@
               placeholder="完整专业+x班"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='完整专业+x班'"
+              @blur="checkMaxLength(student.majorClass, 20)"
             />
           </div>
           <div>
@@ -372,6 +380,7 @@
               placeholder="请输入11位手机号"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='请输入11位手机号'"
+              @blur="checkLength(student.phoneNum, 11)"
             />
           </div>
           <div>
@@ -382,6 +391,7 @@
               placeholder="请输入10位学号"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='请输入10位学号'"
+              @blur="checkLength(student.studentNum, 10)"
             />
           </div>
           <div>
@@ -394,6 +404,7 @@
               placeholder="0-100"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='0-100'"
+              @blur="checkRange(student.cexperiment, 1, 100)"
             />
           </div>
           <div>
@@ -416,6 +427,7 @@
               placeholder="请输入"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='请输入'"
+              @blur="checkMaxLength(student.explanation, 30)"
             />
           </div>
           <div>
@@ -426,17 +438,28 @@
               placeholder="请输入"
               onfocus="this.placeholder=''"
               onblur="this.placeholder='请输入'"
+              @blur="checkMaxLength(student.isTeam, 34)"
             />
           </div>
         </div>
         <div class="bottom-input">
           <div>
             <label>爱好：</label>
-            <textarea cols="40" rows="10" v-model="student.hobby"></textarea>
+            <textarea
+              cols="40"
+              rows="10"
+              v-model="student.hobby"
+              @blur="checkMaxLength(student.hobby, 50)"
+            ></textarea>
           </div>
           <div>
             <label>座右铭：</label>
-            <textarea cols="40" rows="10" v-model="student.motto"></textarea>
+            <textarea
+              cols="40"
+              rows="10"
+              v-model="student.motto"
+              @blur="checkMaxLength(student.motto, 28)"
+            ></textarea>
           </div>
           <div>
             <label
@@ -446,6 +469,7 @@
               cols="40"
               rows="10"
               v-model="student.experience"
+              @blur="checkMaxLength(student.experience, 170)"
             ></textarea>
           </div>
           <div>
@@ -454,6 +478,7 @@
               cols="40"
               rows="10"
               v-model="student.selfEvaluation"
+              @blur="checkMaxLength(student.selfEvaluation, 230)"
             ></textarea>
           </div>
           <div>
@@ -464,6 +489,7 @@
               cols="40"
               rows="10"
               v-model="student.exampleThing"
+              @blur="checkMaxLength(student.exampleThing, 290)"
             ></textarea>
           </div>
           <div>
@@ -472,6 +498,7 @@
               cols="40"
               rows="10"
               v-model="student.reasonForQg"
+              @blur="checkMaxLength(student.reasonForQg, 580)"
             ></textarea>
           </div>
         </div>
@@ -738,6 +765,87 @@ export default {
     };
   },
   methods: {
+    //表单验证
+    checkAll() {
+      let isOk = true;
+      if (!this.checkMaxLength(this.student.name, 15)) {
+        isOk = false;
+        this.$Message.error("请重新检查姓名");
+      }
+      if (!this.checkRange(this.student.age, 15, 25)) {
+        isOk = false;
+        this.$Message.error("请重新检查年龄");
+      }
+      if (!this.checkRange(this.student.cexperiment, 1, 100)) {
+        isOk = false;
+        this.$Message.error("请重新检查C实验成绩");
+      }
+      if (!this.checkMaxLength(this.student.dormitory, 9)) {
+        isOk = false;
+        this.$Message.error("请重新检查宿舍");
+      }
+      if (!this.checkRange(this.student.cexperiment, 1, 100)) {
+        isOk = false;
+        this.$Message.error("请重新检查英语(1)成绩");
+      }
+      if (!this.checkRange(this.student.gradePoint, 0, 5.0)) {
+        isOk = false;
+        this.$Message.error("请重新检查大一上绩点");
+      }
+      if (!this.checkEmail(this.student.email)) {
+        isOk = false;
+        this.$Message.error("请重新检查邮箱");
+      }
+      if (!this.checkMaxLength(this.student.majorClass, 20)) {
+        isOk = false;
+        this.$Message.error("请重新检查专业班级");
+      }
+      if (!this.checkLength(this.student.phoneNum, 11)) {
+        isOk = false;
+        this.$Message.error("请重新检查手机");
+      }
+      if (!this.checkLength(this.student.studentNum, 10)) {
+        isOk = false;
+        this.$Message.error("请重新检查学号");
+      }
+      if (!this.checkRange(this.student.cexperiment, 1, 100)) {
+        isOk = false;
+        this.$Message.error("请重新检查C理论成绩");
+      }
+      if (!this.checkMaxLength(this.student.explanation, 30)) {
+        isOk = false;
+        this.$Message.error("请重新检查社团说明");
+      }
+      if (!this.checkMaxLength(this.student.isTeam, 34)) {
+        isOk = false;
+        this.$Message.error("请重新检查组队信息");
+      }
+      if (!this.checkMaxLength(this.student.hobby, 50)) {
+        isOk = false;
+        this.$Message.error("请重新检查爱好");
+      }
+      if (!this.checkMaxLength(this.student.motto, 28)) {
+        isOk = false;
+        this.$Message.error("请重新检查座右铭");
+      }
+      if (!this.checkMaxLength(this.student.experience, 170)) {
+        isOk = false;
+        this.$Message.error("请重新检查实践经历");
+      }
+      if (!this.checkMaxLength(this.student.selfEvaluation, 230)) {
+        isOk = false;
+        this.$Message.error("请重新检查自我评价");
+      }
+      if (!this.checkMaxLength(this.student.exampleThing, 290)) {
+        isOk = false;
+        this.$Message.error("请重新检查简述");
+      }
+      if (!this.checkMaxLength(this.student.reasonForQg, 580)) {
+        isOk = false;
+        this.$Message.error("请重新检查个人规划和原因");
+      }
+      return isOk;
+    },
     //点击修改或详细
     showDetail(index, html) {
       let number = this.appearList[index].studentNum;
@@ -789,6 +897,7 @@ export default {
     },
     //新增或修改学生
     addNewStudent(url) {
+      if (this.checkAll() == false) return;
       let tips = "";
       if (url == "stu/save") tips = "添加";
       else tips = "修改";
@@ -840,9 +949,14 @@ export default {
             success: (result) => {
               setTimeout(lmsg, 0);
               this.lockAdd = true;
-              this.$Message.success(`${tips}成功`);
-              this.getList("stu/list", null);
-              if (url == "stu/save") this.initStudent(); //添加学生清空信息
+              let obj = JSON.parse(result);
+              if (obj.status == true) {
+                this.$Message.success(`${tips}成功`);
+                this.getList("stu/list", null);
+                if (url == "stu/save") this.initStudent(); //添加学生清空信息
+              } else{
+                this.$Message.error(obj.message);
+              }
             },
             error: (xhr, status, thrown) => {
               this.lockAdd = true;
@@ -972,6 +1086,44 @@ export default {
         this.toPage(1);
       });
     },
+    // 校验范围
+    checkRange(obj, min, max) {
+      obj = Number(obj);
+      if (obj > max || obj < min) {
+        this.$Message.error(`数据范围为${min} ~ ${max}`);
+        return false;
+      } else {
+        return true;
+      }
+    },
+    // 校验邮箱
+    checkEmail(email) {
+      if (
+        !/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(
+          email
+        )
+      ) {
+        this.$Message.error(`邮箱格式错误`);
+        return false;
+      } else {
+        return true;
+      }
+    },
+    // 校验学号和电话号码长度
+    checkLength(obj, maxLength) {
+      if (obj.length != maxLength) {
+        console.log(obj.length);
+        this.$Message.error(`请输入${maxLength}长度的字符`);
+        return false;
+      } else return true;
+    },
+    //长度以内
+    checkMaxLength(obj, maxLength) {
+      if (obj.length > maxLength) {
+        this.$Message.error(`请输入${maxLength}长度以内的字符`);
+        return false;
+      } else return true;
+    },
   },
   created() {
     this.addLiBorder(1);
@@ -982,6 +1134,13 @@ export default {
       // 点击原本的不会搜索，改变搜索
       if (val == "0") this.getList("stu/list", null);
       else this.getList("stu/condition", { condition: val });
+    },
+    student: {
+      //学生列表表单验证
+      handler(val, oldVal) {
+        //console.log(this.student);
+      },
+      deep: true,
     },
   },
 };

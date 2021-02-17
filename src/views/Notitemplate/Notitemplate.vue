@@ -126,6 +126,10 @@ export default {
 
     //添加或修改模板
     addOrChangeNotice() {
+      if (!this.title || !this.content) {
+        this.$Message.error("标题与内容不能为空！");
+        return;
+      }
       this.toggleNoti();
       let url = "model/save";
       let msg = "添加";

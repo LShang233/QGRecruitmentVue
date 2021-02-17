@@ -390,7 +390,9 @@ export default {
           url: this.domain + url,
           success: function (result) {
             setTimeout(lmsg, 0);
-            resolve(result);
+            let obj = JSON.parse(result);
+            if (obj.status == true) resolve(obj.data);
+            else this.$Message.error(obj.message);
           },
           error: (xhr, status, thrown) => {
             setTimeout(lmsg, 0);
@@ -399,8 +401,7 @@ export default {
         });
       });
       listPromise.then((result) => {
-        let obj = JSON.parse(result);
-        this.msgList = JSON.parse(obj.data);
+        this.msgList = JSON.parse(result);
         this.total = this.msgList.length;
         this.$Message.success(`获取成功`);
         this.toPage(1);

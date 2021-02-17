@@ -75,33 +75,11 @@ export default {
             this.$Message.success(`删除成功`);
             setTimeout(() => {
               location.reload();
-            }, 1000);
+            }, 300);
           } else {
             this.$Message.error(obj.message);
           }
         });
-
-        /* let formdata = new FormData();
-        formdata.append("id", this.noticeId);
-        this.$http
-          .post(this.domain + "model/remove", formdata, {
-            headers: {
-              QGer: "I am a QGer",
-            },
-          })
-          .then((res) => {
-            if (res.data.status == true) {
-              this.$Message.success("删除成功");
-              setTimeout(() => {
-                location.reload();
-              }, 1000);
-            } else {
-              this.$Message.error(res.data.msg);
-            }
-          })
-          .catch((err) => {
-            this.$Message.error("删除失败");
-          });*/
       }
     },
     //传给父组件

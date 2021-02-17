@@ -5,7 +5,7 @@
 <template>
   <div>
     <Tabs :title="'通知模板'" />
-    <div>
+    <div class="tab-content">
       <div id="enroll-info">
         <Notice
           :key="'000'"
@@ -177,7 +177,7 @@ export default {
           this.title = "";
           setTimeout(() => {
             location.reload();
-          }, 1000);
+          }, 300);
         } else {
           this.$Message.error(obj.message);
         }

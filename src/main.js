@@ -13,7 +13,8 @@ Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts
 Vue.prototype.$ = jquery
 Vue.prototype.$http = axios
-Vue.prototype.domain = "http://39.98.41.126:30007/recruit/"
+// Vue.prototype.domain = "http://39.98.41.126:30007/recruit/"
+Vue.prototype.domain = "https://recruit.qgailab.com/recruit/"
 Vue.use(iView)
 // 添加导航栏的border
 Vue.prototype.addLiBorder = function(i) {

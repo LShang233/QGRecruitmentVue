@@ -8,6 +8,7 @@
   height: 30px;
   padding: 0 20px;
   transition: background-color 0.3s;
+  cursor: pointer;
 }
 .opt-btn:hover {
   background-color: rgb(135, 68, 212);

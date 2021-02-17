@@ -29,6 +29,146 @@
   background-color: rgb(165, 123, 212);
   color: #fff;
 }
+
+.no-border {
+  input,
+  textarea,
+  div {
+    border: none !important;
+    &:hover {
+      border: none !important;
+    }
+    &:focus {
+      border: none !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.cannot-use {
+  input,
+  textarea,
+  div {
+    pointer-events: none;
+  }
+  .base-input {
+    input {
+      color: black;
+    }
+  }
+}
+
+//新增
+.tab-content {
+  > p {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: black;
+  }
+
+  > input {
+    display: block;
+    text-align: center;
+    margin: 12px auto;
+  }
+
+  .opt-form {
+    width: 70%;
+    margin: 0 auto;
+    align-self: flex-start;
+    padding: 0;
+    font-size: 14px;
+
+    //input边框
+    > div {
+      > div {
+        input,
+        textarea {
+          border: 1px solid #dcdee2;
+          transition: all 0.2s ease-in-out;
+          border-radius: 4px;
+          &:hover {
+            border: 1px rgb(165, 123, 212) solid;
+          }
+          &:focus {
+            border: 1px rgb(165, 123, 212) solid;
+            box-shadow: 0 0 0 2px rgba(165, 123, 212, 0.2);
+          }
+        }
+      }
+    }
+
+    .base-input,
+    .middle-input {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+
+      > div {
+        display: flex;
+        justify-content: space-between;
+
+        label {
+          width: 25%;
+          min-width: 40px;
+          display: inline-block;
+        }
+
+        input,
+        > div {
+          width: 70%;
+          min-width: 115px;
+          margin: 0;
+          height: 100%;
+          outline: none;
+          resize: none;
+        }
+      }
+    }
+
+    .base-input {
+      > div {
+        margin: 5px 10px;
+        flex: 0 0 30%;
+      }
+    }
+
+    .middle-input {
+      > div {
+        margin: 5px 10px;
+        flex: 0 0 calc(100% - 30px);
+      }
+    }
+
+    .bottom-input {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+        margin: 5px 10px;
+        flex: 0 0 calc(100% - 30px);
+
+        &:first-child,
+        &:nth-child(2) {
+          flex: 0 0 calc(50% - 25px);
+        }
+
+        label {
+          width: 100%;
+        }
+
+        input,
+        > div {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
 </style>
 <template>
   <div>
@@ -48,7 +188,7 @@
           @toDad="searchList"
         />
         <Btn :value="'导出'" @click.native="outputStu" />
-        <Btn :value="'新增+'" @click.native="showHtml(2)"/>
+        <Btn :value="'新增+'" @click.native="showHtml(2)" />
         <Select v-model="groupSelect" style="width: 125px; margin-right: 12px">
           <Option
             v-for="item in groupList"
@@ -64,11 +204,288 @@
       </div>
       <Page :total="total" show-elevator class="page" @on-change="changePage" />
     </div>
-    <div class="tab-content" v-show="htmlId == 2">
-      <div class="opt-list">
-        <Table ref="selection" :columns="columns" :data="msgList"></Table>
+    <div class="tab-content" v-show="htmlId != 1">
+      <p>个人信息</p>
+      <div class="opt-form" v-bind:class="{ 'cannot-use': htmlId == 4 }">
+        <div class="base-input">
+          <div>
+            <label>姓名：</label>
+            <input
+              type="text"
+              v-model="student.name"
+              placeholder="请输入汉字姓名"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='请输入汉字姓名'"
+            />
+          </div>
+          <div>
+            <label>年龄：</label>
+            <input
+              v-model="student.age"
+              type="number"
+              max="25"
+              min="15"
+              placeholder="15-25"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='15-25'"
+            />
+          </div>
+          <div>
+            <label>C实验成绩：</label>
+            <input
+              v-model="student.cexperiment"
+              type="number"
+              max="100"
+              min="0"
+              placeholder="0-100"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='0-100'"
+            />
+          </div>
+          <div>
+            <label>性别：</label>
+            <Select v-model="student.gender">
+              <Option
+                v-for="item in genderList"
+                default-label="0"
+                :value="item.value"
+                :key="item.value"
+                >{{ item.label }}</Option
+              >
+            </Select>
+          </div>
+          <div>
+            <label>宿舍：</label>
+            <input
+              v-model="student.dormitory"
+              type="text"
+              placeholder="如：西三110"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='如：西三110'"
+            />
+          </div>
+          <div>
+            <label>英语(1)成绩：</label>
+            <input
+              v-model="student.english"
+              type="number"
+              max="100"
+              min="0"
+              placeholder="0-100"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='0-100'"
+            />
+          </div>
+          <div>
+            <label>组别：</label>
+            <Select v-model="student.groupId">
+              <Option
+                v-for="item in groupIdList"
+                default-label="0"
+                :value="item.value"
+                :key="item.value"
+                >{{ item.label }}</Option
+              >
+            </Select>
+          </div>
+          <div>
+            <label>上学期期末排名：</label>
+            <input
+              v-model="student.classRank"
+              type="number"
+              placeholder="未知请输入0"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='未知请输入0'"
+            />
+          </div>
+          <div>
+            <label>大一上绩点：</label>
+            <input
+              v-model="student.gradePoint"
+              type="number"
+              max="5.0"
+              min="0"
+              placeholder="0-5.0"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='0-5.0'"
+            />
+          </div>
+          <div>
+            <label>年级：</label>
+            <Select v-model="student.grade">
+              <Option
+                v-for="item in gradeList"
+                default-label="0"
+                :value="item.value"
+                :key="item.value"
+                >{{ item.label }}</Option
+              >
+            </Select>
+          </div>
+          <div>
+            <label>班级职务：</label>
+            <input
+              v-model="student.duty"
+              type="text"
+              placeholder="请输入班级职务"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='请输入班级职务'"
+            />
+          </div>
+          <div>
+            <label>邮箱：</label>
+            <input
+              v-model="student.email"
+              type="email"
+              placeholder="请输入电子邮箱"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='请输入电子邮箱'"
+            />
+          </div>
+          <div>
+            <label>专业班级：</label>
+            <input
+              v-model="student.majorClass"
+              type="text"
+              placeholder="完整专业+x班"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='完整专业+x班'"
+            />
+          </div>
+          <div>
+            <label>是否挂科：</label>
+            <Select v-model="student.isFailed">
+              <Option
+                v-for="item in isFailed"
+                default-label="0"
+                :value="item.value"
+                :key="item.value"
+                >{{ item.label }}</Option
+              >
+            </Select>
+          </div>
+          <div>
+            <label>手机：</label>
+            <input
+              v-model="student.phoneNum"
+              type="text"
+              placeholder="请输入11位手机号"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='请输入11位手机号'"
+            />
+          </div>
+          <div>
+            <label>学号：</label>
+            <input
+              v-model="student.studentNum"
+              type="text"
+              placeholder="请输入10位学号"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='请输入10位学号'"
+            />
+          </div>
+          <div>
+            <label>C理论成绩：</label>
+            <input
+              v-model="student.ctheory"
+              type="number"
+              max="100"
+              min="0"
+              placeholder="0-100"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='0-100'"
+            />
+          </div>
+          <div>
+            <label>QQ：</label>
+            <input
+              v-model="student.qq"
+              type="text"
+              placeholder="请输入QQ号"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='请输入QQ号'"
+            />
+          </div>
+        </div>
+        <div class="middle-input">
+          <div>
+            <label>参加其他学生科技社团普通社团情况说明：</label>
+            <input
+              v-model="student.explanation"
+              type="text"
+              placeholder="请输入"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='请输入'"
+            />
+          </div>
+          <div>
+            <label>是否组队报名，填写同组同学姓名(限3人)：</label>
+            <input
+              v-model="student.isTeam"
+              type="text"
+              placeholder="请输入"
+              onfocus="this.placeholder=''"
+              onblur="this.placeholder='请输入'"
+            />
+          </div>
+        </div>
+        <div class="bottom-input">
+          <div>
+            <label>爱好：</label>
+            <textarea cols="40" rows="10" v-model="student.hobby"></textarea>
+          </div>
+          <div>
+            <label>座右铭：</label>
+            <textarea cols="40" rows="10" v-model="student.motto"></textarea>
+          </div>
+          <div>
+            <label
+              >奖惩情况和实践经历(社会实践或者计算机相关技术学习掌握情况)</label
+            >
+            <textarea
+              cols="40"
+              rows="10"
+              v-model="student.experience"
+            ></textarea>
+          </div>
+          <div>
+            <label>自我评价</label>
+            <textarea
+              cols="40"
+              rows="10"
+              v-model="student.selfEvaluation"
+            ></textarea>
+          </div>
+          <div>
+            <label
+              >简述能体现你四个方面的一件事(1)善于协作(2)刻苦努力(3)甘于奉献(4)持之以恒</label
+            >
+            <textarea
+              cols="40"
+              rows="10"
+              v-model="student.exampleThing"
+            ></textarea>
+          </div>
+          <div>
+            <label>请说一下大学四年的个人规划以及为什么希望加入QG工作室</label>
+            <textarea
+              cols="40"
+              rows="10"
+              v-model="student.reasonForQg"
+            ></textarea>
+          </div>
+        </div>
       </div>
-      <Page :total="total" show-elevator class="page" @on-change="changePage" />
+      <Btn
+        :value="'提  交'"
+        @click.native="addNewStudent('stu/save')"
+        v-show="htmlId == 2"
+      />
+      <Btn
+        :value="'提  交'"
+        @click.native="addNewStudent('stu/update')"
+        v-show="htmlId == 3"
+      />
     </div>
   </div>
 </template>
@@ -83,8 +500,57 @@ export default {
   },
   data() {
     return {
+      student: {
+        gender: "男",
+        age: "",
+        dormitory: "",
+        classRank: "",
+        grade: 1,
+        majorClass: "",
+        duty: "",
+        isFailed: "否",
+        ctheory: "",
+        cexperiment: "",
+        english: "",
+        gradePoint: "",
+        explanation: "",
+        email: "",
+        studentNum: "",
+        phoneNum: "",
+        qq: "",
+        hobby: "",
+        motto: "",
+        isTeam: "",
+        experience: "",
+        selfEvaluation: "",
+        exampleThing: "",
+        reasonForQg: "",
+        groupId: 1,
+        name: "",
+        academy: "",
+      },
       groupSelect: "0",
-      htmlId: 2, // 1列表 2新增 3修改 4详细
+      htmlId: 1, // 1列表 2新增 3修改 4详细
+      genderList: [
+        {
+          label: "男",
+          value: "男",
+        },
+        {
+          label: "女",
+          value: "女",
+        },
+      ],
+      isFailed: [
+        {
+          label: "是",
+          value: "是",
+        },
+        {
+          label: "否",
+          value: "否",
+        },
+      ],
       groupList: [
         {
           label: "全部",
@@ -117,6 +583,50 @@ export default {
         {
           label: "图形组",
           value: "图形",
+        },
+      ],
+      gradeList: [
+        {
+          label: "大一",
+          value: 1,
+        },
+        {
+          label: "大二",
+          value: 2,
+        },
+        {
+          label: "大三",
+          value: 3,
+        },
+      ],
+      groupIdList: [
+        {
+          label: "前端组",
+          value: 1,
+        },
+        {
+          label: "后台组",
+          value: 2,
+        },
+        {
+          label: "移动组",
+          value: 7,
+        },
+        {
+          label: "数据挖掘组",
+          value: 4,
+        },
+        {
+          label: "设计组",
+          value: 5,
+        },
+        {
+          label: "嵌入式组",
+          value: 3,
+        },
+        {
+          label: "图形组",
+          value: 6,
         },
       ],
       columns: [
@@ -178,7 +688,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.show(params.index);
+                      this.showDetail(params.index, 4);
                     },
                   },
                 },
@@ -196,7 +706,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.remove(params.index);
+                      this.showDetail(params.index, 3);
                     },
                   },
                 },
@@ -224,12 +734,129 @@ export default {
       appearList: [], // 显示的内容
       msgList: [], // 获取的内容
       total: 0, // 数据条数
+      lockAdd: true,
     };
   },
   methods: {
+    //点击修改或详细
+    showDetail(index, html) {
+      let number = this.appearList[index].studentNum;
+      const lmsg = this.$Message.loading({
+        content: `获取中...`,
+        duration: 0,
+      });
+      let listPromise = new Promise((resolve) => {
+        this.$.ajax({
+          method: "POST",
+          xhrFields: {
+            withCredentials: true,
+          },
+          data: {
+            studentNum: number,
+          },
+          headers: {
+            QGer: "I am a QGer",
+          },
+          url: this.domain + "stu/select",
+          success: function (result) {
+            setTimeout(lmsg, 0);
+            let obj = JSON.parse(result);
+            if (obj.status == true) resolve(obj.data);
+            else this.$Message.error(obj.message);
+          },
+          error: (xhr, status, thrown) => {
+            setTimeout(lmsg, 0);
+            this.$Message.error(`获取失败`);
+          },
+        });
+      });
+      listPromise.then((result) => {
+        if (html == 3) this.showHtml(3);
+        else if (html == 4) this.showHtml(4);
+        this.student = JSON.parse(result);
+        this.$Message.success(`获取成功`);
+      });
+    },
+    // 清空详细信息
+    initStudent() {
+      for (let i in this.student) {
+        this.student[i] = "";
+      }
+      this.student.gender = "男";
+      this.student.grade = 1;
+      this.student.isFailed = "否";
+      this.student.groupId = 1;
+    },
+    //新增或修改学生
+    addNewStudent(url) {
+      let tips = "";
+      if (url == "stu/save") tips = "添加";
+      else tips = "修改";
+      if (this.lockAdd == true) {
+        this.lockAdd = false;
+        const lmsg = this.$Message.loading({
+          content: `${tips}中...`,
+          duration: 0,
+        });
+        let promise = new Promise((resolve) => {
+          $.ajax({
+            url: this.domain + url,
+            data: {
+              gender: this.student.gender,
+              age: this.student.age,
+              dormitory: this.student.dormitory,
+              classRank: this.student.classRank,
+              grade: this.student.grade,
+              majorClass: this.student.majorClass,
+              duty: this.student.duty,
+              isFailed: this.student.isFailed,
+              ctheory: this.student.ctheory,
+              cexperiment: this.student.cexperiment,
+              english: this.student.english,
+              gradePoint: this.student.gradePoint,
+              explanation: this.student.explanation,
+              email: this.student.email,
+              studentNum: this.student.studentNum,
+              phoneNum: this.student.phoneNum,
+              qq: this.student.qq,
+              hobby: this.student.hobby,
+              motto: this.student.motto,
+              isTeam: this.student.isTeam,
+              experience: this.student.experience,
+              selfEvaluation: this.student.selfEvaluation,
+              exampleThing: this.student.exampleThing,
+              reasonForQg: this.student.reasonForQg,
+              groupId: this.student.groupId,
+              name: this.student.name,
+              academy: this.student.academy,
+            },
+            xhrFields: {
+              withCredentials: true,
+            },
+            headers: {
+              QGer: "I am a QGer",
+            },
+            methods: "POST",
+            success: (result) => {
+              setTimeout(lmsg, 0);
+              this.lockAdd = true;
+              this.$Message.success(`${tips}成功`);
+              this.getList("stu/list", null);
+              if (url == "stu/save") this.initStudent(); //添加学生清空信息
+            },
+            error: (xhr, status, thrown) => {
+              this.lockAdd = true;
+              setTimeout(lmsg, 0);
+              this.$Message.error(`${tips}失败`);
+            },
+          });
+        });
+      }
+    },
     //切换
     showHtml(num) {
       this.htmlId = num;
+      this.initStudent();
     },
     //删除结果  未重新获取列表 未测试
     removeStu(index) {
@@ -247,7 +874,6 @@ export default {
             },
             data: {
               studentNum: number,
-              typeId: this.getTypeId(turn),
             },
             headers: {
               QGer: "I am a QGer",
@@ -267,11 +893,11 @@ export default {
         });
         listPromise.then((result) => {
           //过滤列表
-          this.studentList = this.studentList.filter((value) => {
+          this.msgList = this.msgList.filter((value) => {
             return value.studentNum != number ? true : false;
           });
           //更新数据
-          this.total = this.studentList.length;
+          this.total = this.msgList.length;
           this.$Message.success(`删除成功`);
           this.toPage(1);
         });
@@ -329,7 +955,9 @@ export default {
           url: this.domain + url,
           success: function (result) {
             setTimeout(lmsg, 0);
-            resolve(result);
+            let obj = JSON.parse(result);
+            if (obj.status == true) resolve(obj.data);
+            else this.$Message.error(obj.message);
           },
           error: (xhr, status, thrown) => {
             setTimeout(lmsg, 0);
@@ -338,8 +966,7 @@ export default {
         });
       });
       listPromise.then((result) => {
-        let obj = JSON.parse(result);
-        this.msgList = JSON.parse(obj.data);
+        this.msgList = JSON.parse(result);
         this.total = this.msgList.length;
         this.$Message.success(`获取成功`);
         this.toPage(1);

@@ -2,6 +2,8 @@
 @import "./../../views/EnrollInfo/EnrollInfo";
 .opt-pane {
   padding: 20px;
+  width: 100%;
+  min-width: 1024px;
   display: flex;
   flex-direction: column;
   background-color: #fff;
